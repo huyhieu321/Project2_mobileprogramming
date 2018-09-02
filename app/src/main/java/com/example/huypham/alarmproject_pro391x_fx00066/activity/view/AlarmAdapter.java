@@ -76,6 +76,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.TimeViewHold
             txtAlarmTilte = itemView.findViewById(R.id.txtAlarmTitle);
             txtAlarmTime = itemView.findViewById(R.id.txtAlarmTime);
             btn_onoff = itemView.findViewById(R.id.btnAlarmItem);
+
             btn_onoff.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -91,7 +92,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.TimeViewHold
                     }
 
                 }
-            });
+            }); // Edit view Button ON/OFF and callback method.
 
         }
 
@@ -118,7 +119,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.TimeViewHold
                     removeAlarm(this.getAdapterPosition());
                     break;
                 case R.id.edit:
-                    CallBack.onMenuAction(mAlarms.get(getAdapterPosition()),menuItem,getAdapterPosition());
+                    CallBack.onMenuAction(mAlarms.get(getAdapterPosition()),menuItem,getAdapterPosition()); // CallBack onMenuAction() from subclass
                     break;
             }
             return true;
@@ -128,19 +129,19 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.TimeViewHold
     public void insertAlarm(List<Alarm> alarm) {
         //TODO: Xử lý logic thêm alarm vào adapter
         this.mAlarms = alarm;
-        notifyDataSetChanged();
+        notifyDataSetChanged(); // update list
     }
 
     public void updateAlarm(Alarm alarm, int position) {
         //TODO: Xử lý logic sửa alarm từ adapter
-        mAlarms.remove(position);
-        mAlarms.add(position,alarm);
+        mAlarms.remove(position);// delete Alarm at position
+        mAlarms.add(position,alarm); // add Alarm after editing at this postion
         notifyDataSetChanged();
 
     }
     public void removeAlarm(int position) {
         //TODO: Xử lý logic xóa alarm khỏi adapter
-        mAlarms.remove(position);
+        mAlarms.remove(position); // delete Alarm at position
         notifyDataSetChanged();
     }
 

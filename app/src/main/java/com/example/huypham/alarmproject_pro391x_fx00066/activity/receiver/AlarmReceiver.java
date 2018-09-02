@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
 
         Log.i("I","IM in receiver");
-
+        // Send data intent to service
         Intent intentAlarmService = new Intent(context, AlarmService.class);
         intentAlarmService.putExtras(intent.getExtras());
         intentAlarmService.putExtra("extra",intent.getExtras().getString("extra"));

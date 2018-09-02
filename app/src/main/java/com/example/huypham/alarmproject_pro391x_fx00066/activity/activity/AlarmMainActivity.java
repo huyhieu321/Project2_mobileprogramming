@@ -82,7 +82,6 @@ public class AlarmMainActivity extends AppCompatActivity implements AlarmAdapter
 
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, pendingIntent); // Set Alarm repeat interval_day.
-//       alarmManager.set(AlarmManager.RTC,calendar.getTimeInMillis(),pendingIntent);
         broadcastIntent.putExtra("extra","on");
         sendBroadcast(broadcastIntent);
     }
@@ -91,8 +90,6 @@ public class AlarmMainActivity extends AppCompatActivity implements AlarmAdapter
     public void cancelAlarm(Alarm timeItem,int position) {
         //TODO: Gửi thông tin giờ hẹn cần hủy sang cho AlarmReceiver
         Log.i("MES","I'm in cancle Alarm");
-
-        //pendingIntent = PendingIntent.getBroadcast(AlarmMainActivity.this,1,broadcastIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
         broadcastIntent.putExtra("extra","off");
         sendBroadcast(broadcastIntent);

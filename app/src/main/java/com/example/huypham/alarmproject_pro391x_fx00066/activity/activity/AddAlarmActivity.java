@@ -37,7 +37,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         Bundle bundle = getIntent().getExtras();
         String action = getIntent().getAction();
-
+        /* if action == ADD set title ADD*/
         if(action.equals("ADD")){
             getSupportActionBar().setTitle("ADD");
             alarm = (Alarm) bundle.getSerializable(AlarmMainActivity.SEND_ALARM);
@@ -60,6 +60,7 @@ public class AddAlarmActivity extends AppCompatActivity {
                 }
             });
         }
+        /* if action == EDIT  set title EDIT*/
         else if(action.equals("EDIT")){
             getSupportActionBar().setTitle("EDIT");
             alarm = (Alarm) bundle.getSerializable(AlarmMainActivity.SEND_ALARM);
@@ -83,9 +84,6 @@ public class AddAlarmActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
