@@ -51,6 +51,9 @@ public class AlarmMainActivity extends AppCompatActivity implements AlarmAdapter
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mRcvAdapter);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        broadcastIntent = new Intent(AlarmMainActivity.this,AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(AlarmMainActivity.this,1,broadcastIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
     }
 
     @Override
@@ -71,28 +74,28 @@ public class AlarmMainActivity extends AppCompatActivity implements AlarmAdapter
     public void startAlarm(Alarm alarm,int position) {
         //TODO: Xử lý truyền thông tin giờ hẹn cho AlarmReceiver
         Log.i("MES","I'm in start Alarm");
-        broadcastIntent = new Intent(AlarmMainActivity.this,AlarmReceiver.class);
+
         Toast.makeText(this,alarm.getTitle()+" ON",Toast.LENGTH_SHORT).show();
         calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,alarm.getHour());
         calendar.set(Calendar.MINUTE,alarm.getMinutes());
-        broadcastIntent.putExtra("extra","on");
-        pendingIntent = PendingIntent.getBroadcast(AlarmMainActivity.this,1,broadcastIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, pendingIntent); // Set Alarm repeat interval_day.
 //       alarmManager.set(AlarmManager.RTC,calendar.getTimeInMillis(),pendingIntent);
-
-
+        broadcastIntent.putExtra("extra","on");
+        sendBroadcast(broadcastIntent);
     }
 
     @Override
     public void cancelAlarm(Alarm timeItem,int position) {
         //TODO: Gửi thông tin giờ hẹn cần hủy sang cho AlarmReceiver
         Log.i("MES","I'm in cancle Alarm");
-        broadcastIntent.putExtra("extra","off");
-        sendBroadcast(broadcastIntent);
+
         //pendingIntent = PendingIntent.getBroadcast(AlarmMainActivity.this,1,broadcastIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
+        broadcastIntent.putExtra("extra","off");
+        sendBroadcast(broadcastIntent);
 
 
     }

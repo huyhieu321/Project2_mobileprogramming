@@ -13,18 +13,16 @@ public class AlarmService extends Service {
     public AlarmService() {
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-       return  null;
-    }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("MES","I'm in SERVICE");
         String key = intent.getExtras().getString("extra");
+        Log.i("MES","Nhan dc"+key);
         int id = 0;
-        media = MediaPlayer.create(this, R.raw.nhacchuong);
+        
+
         if(key.equals("on")){
             id = 1;
             Log.i("MES","ON in service");
@@ -35,13 +33,28 @@ public class AlarmService extends Service {
         }
 
         if ( id == 1 ){
+            media = MediaPlayer.create(this, R.raw.nhacchuong);
             media.start();
              id = 0;
         }
         else if ( id == 0){
-            media.stop();
-            media.reset();
+
+            stopPlaying();
+            Log.i("MES","STOP in service");
         }
-        return START_NOT_STICKY;
+            return START_NOT_STICKY;
+
+    }
+    private void stopPlaying(){
+        if (media != null) {
+            media.stop();
+            media.release();
+            media = null;
+        }
+    }
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        return  null;
     }
 }
